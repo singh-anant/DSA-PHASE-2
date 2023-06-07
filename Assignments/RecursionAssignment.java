@@ -220,7 +220,7 @@ class RecursionAssignment {
 
         // System.out.println(replaceWithhash("aabbcc"));
 
-        System.out.println(addAStar("aabbcc"));
+        // System.out.println(addAStar("aabbcc"));
 
     }
 
