@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class RecursionAssignment {
     static void power(int x, int n, int ans) {
         if (n == 0) {
@@ -128,6 +130,21 @@ class RecursionAssignment {
             return countOccurences(arr, index + 1, x);
     }
 
+    static ArrayList<Integer> countMultipleOccurences(int arr[], int x, int index1, int n) {
+        if (index1 == arr.length - 1) {
+            ArrayList<Integer> result = new ArrayList<>();
+            return result;
+        }
+
+        ArrayList<Integer> ans = countMultipleOccurences(arr, x, index1 + 1, n);
+        if (arr[index1] == x) {
+            ans.add(index1);
+
+        }
+
+        return ans;
+    }
+
     static void searchAndReplace(int arr[], int x, int r, int index) {
         if (index == arr.length - 1)
             return;
@@ -142,12 +159,12 @@ class RecursionAssignment {
     static String replaceWithhash(String str) {
         if (str.length() == 1)
             return str;
-
-        if (str.charAt(0) == str.charAt(1)) {
-            // String sub = str.replace(str.charAt(0), '#');
-            return str.charAt(0) + replaceWithhash(str.substring(1).replace(str.charAt(1), '#'));
+        char fc = str.charAt(0);
+        for (int i = 1; i < str.length(); i++) {
+            if (str.charAt(i) == fc)
+                str = str.replace(str.charAt(i), '#');
         }
-        return str.charAt(0) + replaceWithhash(str.substring(1));
+        return fc + replaceWithhash(str.substring(1));
 
     }
 
@@ -211,6 +228,13 @@ class RecursionAssignment {
          */
 
         /*
+         * int arr[] = { 3, 5, 3, 7, 4, 3, 9 };
+         * ArrayList<Integer> ans = countMultipleOccurences(arr, 3, 0,
+         * countOccurences(arr, 0, 3));
+         * System.out.println(ans);
+         */
+
+        /*
          * int arr[] = { 2, 5, 6, 7, 4, 3, 9 };
          * searchAndReplace(arr, 6, 10, 0);
          * for (int i : arr) {
@@ -218,7 +242,7 @@ class RecursionAssignment {
          * }
          */
 
-        // System.out.println(replaceWithhash("aabbcc"));
+        System.out.println(replaceWithhash("aaabbbccc"));
 
         // System.out.println(addAStar("aabbcc"));
 
