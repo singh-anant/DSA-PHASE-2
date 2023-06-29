@@ -1,6 +1,10 @@
 import java.util.Arrays;
 
 public class NLargestElement {
+    /*
+     * We can use String builder as well beacause it has reverse() function as
+     * well..
+     */
     static int nLargest(int arr[], int nth) {
         if (arr.length == 0)
             return -1;
