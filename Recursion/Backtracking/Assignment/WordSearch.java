@@ -1,38 +1,36 @@
 class Solution {
-
-    static boolean isAccepted(char[][] board, int row, int col, char ch) {
-        if (row < board.length && col < board[row].length && col > 0 && board[row][col] == ch)
-            return true;
-
-        return false;
-    }
-
-    static boolean existHelper(char[][] board, int row, int col, String word, StringBuilder sb, int index) {
-        if (word == sb.toString()) {
-            if (index == word.length() - 1)
-                return true;
-
-        }
-        System.out.println(sb);
-
-        if (isAccepted(board, row, col, word.charAt(index))) {
-            sb.append(board[row][col]);
-            // if(existHelper(board,row-1,col,word,sb,index+1))
-            // return true;
-            if (existHelper(board, row, col + 1, word, sb, index + 1))
-                return true;
-            if (existHelper(board, row, col - 1, word, sb, index + 1))
-                return true;
-            if (existHelper(board, row + 1, col, word, sb, index + 1))
-                return true;
-            sb.deleteCharAt(sb.length() - 1);
-
-        }
-        return false;
-    }
+    boolean[][] valid;
 
     public boolean exist(char[][] board, String word) {
-        StringBuilder sb = new StringBuilder();
-        return existHelper(board, 0, 0, word, sb, 0);
+        valid = new boolean[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (word.charAt(0) == board[i][j]) {
+                    if (check(board, i, j, 0, word))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean check(char[][] board, int row, int column, int index, String word) {
+        if (index == word.length()) {
+            return true;
+        }
+
+        if (row < 0 || row >= board.length || column < 0 || column >= board[0].length
+                || board[row][column] != word.charAt(index) || valid[row][column])
+            return false;
+
+        valid[row][column] = true;
+        if (check(board, row + 1, column, index + 1, word) ||
+                check(board, row, column + 1, index + 1, word) ||
+                check(board, row, column - 1, index + 1, word) ||
+                check(board, row - 1, column, index + 1, word)) {
+            return true;
+        }
+        valid[row][column] = false;
+        return false;
     }
 }
