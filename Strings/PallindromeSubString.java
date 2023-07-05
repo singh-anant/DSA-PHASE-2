@@ -15,12 +15,12 @@ public class PallindromeSubString {
     }
 
     public static void main(String[] args) {
-        String str = "abbcccddd";
+        String str = "abc";
         ArrayList<String> arr = new ArrayList<>();
         ArrayList<String> pallindomearr = new ArrayList<>();
 
         for (int i = 0; i < str.length(); i++) {
-            for (int j = i + 1; j < str.length(); j++) {
+            for (int j = i + 1; j <= str.length(); j++) {
                 String temp = str.substring(i, j);
                 arr.add(temp);
                 if (isPallindrome(temp))
