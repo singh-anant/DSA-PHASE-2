@@ -15,7 +15,7 @@ public class PallindromeSubString {
     }
 
     public static void main(String[] args) {
-        String str = "abc";
+        String str = "ccc";
         ArrayList<String> arr = new ArrayList<>();
         ArrayList<String> pallindomearr = new ArrayList<>();
 
@@ -29,5 +29,14 @@ public class PallindromeSubString {
         }
         System.out.println(arr);
         System.out.println(pallindomearr);
+        int maxLength = pallindomearr.get(0).length();
+        String ans = pallindomearr.get(0);
+        for (int i = 0; i < pallindomearr.size(); i++) {
+            if (maxLength < pallindomearr.get(i).length()) {
+                ans = pallindomearr.get(i);
+                maxLength = pallindomearr.get(i).length();
+            }
+        }
+        System.out.println(ans);
     }
 }
