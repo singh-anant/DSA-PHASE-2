@@ -1,4 +1,6 @@
+import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Stack;
 
 /* 
  * INSERTION
@@ -78,12 +80,69 @@ class OperationsOnBinaryTree {
         preOrderTraversal(root.right);
     }
 
+    void preOrderTraversalInIterative(BinaryTreeNode root) {
+        if (root == null)
+            return;
+        Stack<BinaryTreeNode> stack = new Stack<>();
+        stack.push(root);// 10 is pushed in stack
+        while (!stack.isEmpty()) {
+            BinaryTreeNode currentNode = stack.pop();
+            System.out.print(currentNode.data + " --> " + " ");
+            // Now we have to push left and right element.....
+            if (currentNode.right != null)
+                stack.push(currentNode.right);
+            if (currentNode.left != null)
+                stack.push(currentNode.left);
+        }
+
+    }
+
+    void preOrderTraversalInIterativeOptimised(BinaryTreeNode root) {
+        if (root == null)
+            return;
+        Stack<BinaryTreeNode> stack = new Stack<>();
+        BinaryTreeNode currentNode = root;
+        while (currentNode != null || !stack.isEmpty()) {
+            while (currentNode != null) {
+                System.out.print(currentNode.data + " ");
+                if (currentNode.right != null)
+                    stack.push(currentNode.right);
+                currentNode = currentNode.left;
+            }
+            if (!stack.isEmpty())
+                currentNode = stack.pop();
+
+        }
+        stack.pop();
+    }
+
     void postOrderTraversal(BinaryTreeNode root) {
         if (root == null)
             return;
         postOrderTraversal(root.left);
         postOrderTraversal(root.right);
         System.out.println(root.data);
+
+    }
+
+    void postOrderTraversalIterative(BinaryTreeNode root) {
+        if (root == null)
+            return;
+        Stack<BinaryTreeNode> stack = new Stack<>();
+        BinaryTreeNode currentNode = root;
+        while (currentNode != null || !stack.isEmpty()) {
+            while (currentNode != null) {
+                stack.push(currentNode);
+                if (currentNode.right != null)
+                    stack.push(currentNode.right);
+                if (currentNode.left != null)
+                    stack.push(currentNode.left);
+                currentNode = currentNode.left;
+            }
+            currentNode = stack.pop();
+            System.out.print(currentNode.data + " ");
+
+        }
 
     }
 
@@ -95,6 +154,86 @@ class OperationsOnBinaryTree {
         inOrderTraversal(root.right);
     }
 
+    void inOrderTraversalIteration(BinaryTreeNode root) {
+        if (root == null)
+            return;
+        Stack<BinaryTreeNode> stack = new Stack<>();
+        BinaryTreeNode currentNode = root;
+        while (currentNode != null && !stack.isEmpty()) {
+            while (currentNode != null) {
+                stack.push(currentNode);
+                currentNode = currentNode.left;
+            }
+            currentNode = stack.pop();
+            System.out.print(currentNode.data + " ");
+            currentNode = currentNode.right;
+
+        }
+        while (!stack.isEmpty()) {
+            currentNode = stack.pop();
+            System.out.print(currentNode.data + " ");
+            if (currentNode.right != null)
+                stack.push(currentNode.right);
+        }
+
+    }
+
+    void breathFirstSearch(BinaryTreeNode root) {
+        LinkedList<BinaryTreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            // Removing first element from queue
+            BinaryTreeNode node = queue.removeFirst();
+            System.out.print(node.data);
+
+            // Put left and right in the queue
+            if (node.left != null)
+                queue.addLast(node.left);
+            if (node.right != null)
+                queue.addLast(node.right);
+        }
+    }
+
+    void breathFirstSearch2(BinaryTreeNode root) {
+        LinkedList<BinaryTreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            // Removing first element from queue
+            // BinaryTreeNode node=queue.removeFirst();
+            int countQueue = queue.size();
+            for (int i = 0; i < countQueue; i++) {
+                BinaryTreeNode currentNode = queue.poll();
+                System.out.print(currentNode.data + " ");
+                if (currentNode.left != null)
+                    queue.addLast(currentNode.left);
+                if (currentNode.right != null)
+                    queue.addLast(currentNode.right);
+            }
+            System.out.println();
+        }
+
+    }
+
+    static int heightR(BinaryTreeNode root) {
+        if (root == null)
+            return 0;// Empty tree height is zero
+        int leftHeight = heightR(root.left);
+        int rightHeight = heightR(root.right);
+        int value = Math.max(leftHeight, rightHeight);
+        return value + 1;
+
+    }
+
+    static int noOfNodes(BinaryTreeNode root) {
+        // Time Complexity--BigO(depth);
+        if (root == null)
+            return 0;// Empty tree height is zero
+        int counter = 1;
+        // Visit to Node(1)
+        counter += heightR(root.left);
+        counter += heightR(root.right);
+        return counter;
+    }
 }
 
 public class BinaryTree {
@@ -115,7 +254,10 @@ public class BinaryTree {
                     root = obt.addANode();
                     break;
                 case 2:
-                    obt.print(root);
+                    // obt.print(root);
+                    // obt.preOrderTraversalInIterative(root);
+                    // obt.inOrderTraversalIteration(root);
+                    obt.postOrderTraversalIterative(root);
                     break;
                 case 3:
                     System.exit(0);

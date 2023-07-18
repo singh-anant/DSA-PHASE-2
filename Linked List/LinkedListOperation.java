@@ -135,45 +135,35 @@ class LinkedListOperation<T> {
     public static void main(String[] args) {
         LinkedListOperation<Integer> opr = new LinkedListOperation<>();
         int choice = 0;
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println("1. Add");
-            System.out.println("2. Print");
-            System.out.println("3. Add Position Wise...");
-            System.out.println("4. Delete Position Wise...");
-            System.out.println("Enter the Choice...");
-            choice = scanner.nextInt();
-            switch (choice) {
-                case 1:
-                    opr.add(10);
-                    opr.add(20);
-                    opr.add(30);
-                    opr.add(40);
-                    break;
-                case 2:
-                    opr.print(opr.head);
-                    break;
-                case 3:
-                    opr.addPositionWise(2, 1000);
-                    break;
-                case 4:
-                    opr.deletePositionWise(2);
-                    break;
-                default:
-                    System.out.println("Wrong Choice....");
-                    return;
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                System.out.println("1. Add");
+                System.out.println("2. Print");
+                System.out.println("3. Add Position Wise...");
+                System.out.println("4. Delete Position Wise...");
+                System.out.println("Enter the Choice...");
+                choice = scanner.nextInt();
+                switch (choice) {
+                    case 1:
+                        opr.add(10);
+                        opr.add(20);
+                        opr.add(30);
+                        opr.add(40);
+                        break;
+                    case 2:
+                        opr.print(opr.head);
+                        break;
+                    case 3:
+                        opr.addPositionWise(2, 1000);
+                        break;
+                    case 4:
+                        opr.deletePositionWise(2);
+                        break;
+                    default:
+                        System.out.println("Wrong Choice....");
+                        return;
+                }
             }
         }
-        // opr.add(100);
-        // opr.add(200);
-        // opr.add(300);
-        // opr.print(opr.head);
-        // // Create a node
-        // Node<Integer> node = new Node<>(100);
-        // // Connect the Nodes
-        // Node<Integer> node2 = new Node<>(200);
-        // node.next = node2;
-        // LinkedListOperations<Integer> l = new LinkedListOperations<>();
-        // l.print(node);
     }
 }
