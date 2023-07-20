@@ -1,6 +1,10 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.TreeMap;
 
 /* 
  * INSERTION
@@ -217,10 +221,10 @@ class OperationsOnBinaryTree {
     static int heightR(BinaryTreeNode root) {
         if (root == null)
             return 0;// Empty tree height is zero
-        int leftHeight = heightR(root.left);
-        int rightHeight = heightR(root.right);
+        int leftHeight = 1 + heightR(root.left);
+        int rightHeight = 1 + heightR(root.right);
         int value = Math.max(leftHeight, rightHeight);
-        return value + 1;
+        return value;
 
     }
 
@@ -234,6 +238,152 @@ class OperationsOnBinaryTree {
         counter += heightR(root.right);
         return counter;
     }
+
+    int maxLevel = 0;
+
+    void printLeftView(BinaryTreeNode root, int currentlevel) {
+        if (root == null)
+            return;
+        if (maxLevel < currentlevel) {
+            System.out.println(root.data);
+            maxLevel = currentlevel;
+        }
+        printLeftView(root.left, currentlevel + 1);
+        printLeftView(root.right, currentlevel + 1);
+
+    }
+
+    void printLeftViewIterative(BinaryTreeNode root) {
+        if (root == null)
+            return;
+        // Here we have done upcast...
+        Queue<BinaryTreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int queueSize = queue.size();
+            for (int i = 0; i < queueSize; i++) {
+                BinaryTreeNode currentNode = queue.poll();
+                if (i == 0)
+                    System.out.print(currentNode.data);
+                if (currentNode.left != null)
+                    queue.add(currentNode.left);
+
+                if (currentNode.right != null)
+                    queue.add(currentNode.right);
+            }
+        }
+    }
+
+    void printRightViewIterative(BinaryTreeNode root) {
+        if (root == null)
+            return;
+        // Here we have done upcast...
+        Queue<BinaryTreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int queueSize = queue.size();
+            for (int i = 0; i < queueSize; i++) {
+                BinaryTreeNode currentNode = queue.poll();
+                // if (i == queueSize-1)
+                // or
+                if (i == 0)
+                    System.out.print(currentNode.data);
+
+                if (currentNode.right != null)
+                    queue.add(currentNode.right);
+                if (currentNode.left != null)
+                    queue.add(currentNode.left);
+            }
+        }
+    }
+
+    void printRightView(BinaryTreeNode root, int currentlevel) {
+        if (root == null)
+            return;
+        if (maxLevel < currentlevel) {
+            System.out.println(root.data);
+            maxLevel = currentlevel;
+        }
+        // Level by level it is incremented....
+        printLeftView(root.right, currentlevel + 1);
+        printLeftView(root.left, currentlevel + 1);
+    }
+
+    void printVerticalOrder(BinaryTreeNode root) {
+        TreeMap<Integer, ArrayList<Integer>> map = new TreeMap<>();
+        verticalOrder(root, 0, map);
+        for (Map.Entry<Integer, ArrayList<Integer>> m : map.entrySet()) {
+            System.out.println(m.getKey() + " " + m.getValue());
+        }
+    }
+
+    void verticalOrder(BinaryTreeNode root, int distance, TreeMap<Integer, ArrayList<Integer>> map) {
+        if (root == null)
+            return;
+        // When we will go left we will do -1
+        // When we will go right we will do +1
+        if (map.get(distance) == null) {
+            // Create a fresh ArrayList
+            ArrayList<Integer> arr = new ArrayList<>();
+            arr.add(root.data);
+            map.put(distance, arr);
+        } else {
+            // Add to the existing key...
+            map.get(distance).add(root.data);
+        }
+        verticalOrder(root.left, distance - 1, map);
+        verticalOrder(root.right, distance + 1, map);
+
+    }
+
+    void printtopView(BinaryTreeNode root) {
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        topView(root, 0, map);
+        for (Map.Entry<Integer, Integer> m : map.entrySet()) {
+            System.out.println(m.getKey() + " " + m.getValue());
+        }
+    }
+
+    void topView(BinaryTreeNode root, int distance, TreeMap<Integer, Integer> map) {
+        if (root == null)
+            return;
+        // When we will go left we will do -1
+        // When we will go right we will do +1
+        if (map.get(distance) == null) {
+            // Create a fresh ArrayList
+            map.put(distance, root.data);
+        }
+        topView(root.left, distance - 1, map);
+        topView(root.right, distance + 1, map);
+
+    }
+
+    void printbottomView(BinaryTreeNode root) {
+        TreeMap<Integer, ArrayList<Integer>> map = new TreeMap<>();
+        verticalOrder(root, 0, map);
+        for (Map.Entry<Integer, ArrayList<Integer>> m : map.entrySet()) {
+            ArrayList<Integer> arr = new ArrayList<>();
+            System.out.println(m.getValue());
+        }
+    }
+
+    boolean isChildrenSum(BinaryTreeNode root) {
+        if (root == null)
+            return true;
+
+        if (root.left == null && root.right == null)
+            return true;
+
+        int sum = 0;
+        if (root.left != null) {
+            sum += root.left.data;
+        }
+        if (root.right != null) {
+            sum += root.right.data;
+        }
+        return root.data == sum && isChildrenSum(root.left) && isChildrenSum(root.right);
+    }
+
 }
 
 public class BinaryTree {
@@ -257,9 +407,15 @@ public class BinaryTree {
                     // obt.print(root);
                     // obt.preOrderTraversalInIterative(root);
                     // obt.inOrderTraversalIteration(root);
-                    obt.postOrderTraversalIterative(root);
+                    // obt.postOrderTraversalIterative(root);
+                    // obt.printLeftView(root, 1);
+                    // obt.printRightView(root, 1);
+                    obt.printVerticalOrder(root);
                     break;
                 case 3:
+                    System.out.println(OperationsOnBinaryTree.heightR(root));
+                    break;
+                case 4:
                     System.exit(0);
                     ;
 
