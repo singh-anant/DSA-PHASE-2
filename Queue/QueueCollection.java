@@ -10,7 +10,7 @@ public class QueueCollection {
         queue.add(40);
         System.out.println(queue);
         System.out.println(queue.poll());
-        System.out.println(queue);
+        System.out.println(queue.peek());
 
     }
 }
