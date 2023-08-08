@@ -176,7 +176,7 @@ class OperationsOnBinaryTree {
         while (!stack.isEmpty()) {
             currentNode = stack.pop();
             System.out.print(currentNode.data + " ");
-            if (currentNode.right != null)
+            if (currentNode.right != null)      
                 stack.push(currentNode.right);
         }
 
@@ -390,7 +390,7 @@ class OperationsOnBinaryTree {
         diagonalView(root, 0, map);
         for (Map.Entry<Integer, ArrayList<Integer>> m : map.entrySet()) {
             System.out.println(m.getKey() + " " + m.getValue());
-        }
+        }           
     }
 
     void diagonalView(BinaryTreeNode root, int distance, TreeMap<Integer, ArrayList<Integer>> map) {
